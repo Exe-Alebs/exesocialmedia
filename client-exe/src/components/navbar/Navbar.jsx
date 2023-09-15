@@ -50,6 +50,7 @@ const Navbar = () => {
           fontSize="clamp(1rem, 2rem, 2.25re"
         ></Typography>
       </FLexBetween>
+      <></>
     </FLexBetween>
   );
 };

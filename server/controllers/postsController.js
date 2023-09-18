@@ -2,9 +2,9 @@ import {
   handleNotFoundError,
   handleServerError,
 } from '../middlewares/error.js';
-import Post from '../models/Post.js';
-import User from '../models/User.js';
-import { handleSuccessResponse } from './../middlewares/success.js';
+import Post from '../models/PostModel.js';
+import User from '../models/UserModel.js';
+import { handleSuccessResponse } from '../middlewares/success.js';
 
 //create
 export const createPost = async (req, res) => {

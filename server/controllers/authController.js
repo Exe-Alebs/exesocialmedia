@@ -1,66 +1,44 @@
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import User from '../models/UserModel.js';
+import * as userService from '../service/authService.js';
 import {
-  handleNotFoundError,
   handleServerError,
+  handleNotFoundError,
   handleValidationErrors,
 } from '../middlewares/error.js';
+import { handleSuccessResponse } from '../middlewares/success.js';
 
-//register
 export const register = async (req, res) => {
   try {
-    const {
-      firstName,
-      lastName,
-      email,
-      password,
-      picturePath,
-      friends,
-      location,
-      occupation,
-    } = req.body;
-
-    if (!firstName || !lastName || !email || !password) {
-      return handleValidationErrors(res, 'Required fields are missing');
-    }
-
-    const salt = await bcrypt.genSalt();
-    const passwordHash = await bcrypt.hash(password, salt);
-
-    const newUser = new User({
-      firstName,
-      lastName,
-      email,
-      password: passwordHash,
-      picturePath,
-      location,
-      friends,
-      occupation,
-      viewedProfile: Math.floor(Math.random() * 1000),
-      impressions: Math.floor(Math.random() * 1000),
-    });
-
-    const savedUser = await newUser.save();
-    res.status(201).json(savedUser);
+    const { body } = req;
+    const savedUser = await userService.registerUser(body);
+    handleSuccessResponse(res, savedUser, 201);
   } catch (error) {
-    handleServerError(res, error);
+    if (error.message === 'Required fields are missing') {
+      handleValidationErrors(res, error.message);
+    } else if (
+      error.message ===
+      'Email is already registered. Please use a different email address.'
+    ) {
+      // Provide the custom error message to the user
+      handleValidationErrors(res, error.message);
+    } else {
+      handleServerError(res, error);
+    }
   }
 };
 
-//login
-export const login = async (res, req) => {
+export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email: email });
-    if (!user) return handleNotFoundError();
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return handleValidationErrors();
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-    delete user.password;
-    res.status(200).json({ token, user });
+    const userData = await userService.loginUser(email, password);
+    handleSuccessResponse(res, userData, 200);
   } catch (error) {
-    handleServerError(res, error);
+    if (
+      error.message === 'User not found' ||
+      error.message === 'Invalid password'
+    ) {
+      handleValidationErrors(res, error.message);
+    } else {
+      handleServerError(res, error);
+    }
   }
 };

@@ -4,8 +4,8 @@ import {
   getUserPosts,
   likePost,
   deletePost,
-} from '../controllers/posts.js';
-import { verifyToken } from '../middlewares/auth.js';
+} from '../controllers/postsController.js';
+import { verifyToken } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 

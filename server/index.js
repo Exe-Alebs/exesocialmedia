@@ -3,21 +3,21 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import multer from 'multer';
 //routes import
-import authRoutes from './routes/auth.js';
-import userRoutes from './routes/users.js';
-import postRoutes from './routes/posts.js';
+import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/usersRoutes.js';
+import postRoutes from './routes/postsRoutes.js';
 
 //app import
 import app from './middlewares/middleware.js';
 
 //controller
-import { register } from './controllers/auth.js';
-import { verifyToken } from './middlewares/auth.js';
-import { createPost } from './controllers/posts.js';
+import { register } from './controllers/authController.js';
+import { verifyToken } from './middlewares/authMiddleware.js';
+import { createPost } from './controllers/postsController.js';
 
 //models
-import User from './models/User.js';
-import Post from './models/Post.js';
+import User from './models/UserModel.js';
+import Post from './models/PostModel.js';
 
 //fakedata to populate backend models
 import { users, posts } from './data/index.js';

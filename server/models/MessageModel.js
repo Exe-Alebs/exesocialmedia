@@ -4,4 +4,5 @@ const MessageSchema = mongoose.Schema({
   sender: {
     ref: 'User',
   },
+  recipient: {},
 });

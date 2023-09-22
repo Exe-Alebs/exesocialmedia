@@ -85,3 +85,14 @@ export const deletePostById = async (postId) => {
     throw error;
   }
 };
+
+export const updatePostById = async (postId, updatedData) => {
+  try {
+    const post = await Post.findByIdAndUpdate(postId, updatedData, {
+      new: true,
+    });
+    return post;
+  } catch (error) {
+    throw new Error('Failed to update the post');
+  }
+};

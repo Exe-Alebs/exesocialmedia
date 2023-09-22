@@ -37,3 +37,10 @@ export const addRemoveFriend = async (userId, friendId) => {
   await friend.save();
   return getUserFriendsById(userId);
 };
+
+export const updateUser = async (userId, updatedData) => {
+  const user = await User.findByIdAndUpdate(userId, updatedData, {
+    new: true,
+  });
+  return user;
+};

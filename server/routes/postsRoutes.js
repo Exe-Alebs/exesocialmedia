@@ -4,6 +4,7 @@ import {
   getUserPosts,
   likePost,
   deletePost,
+  updatePost,
 } from '../controllers/postsController.js';
 import { verifyToken } from '../middlewares/authMiddleware.js';
 
@@ -17,6 +18,7 @@ router.get('/:userId/posts', getUserPosts);
 
 // Update (patch) - Like a post by post id
 router.patch('/:id/like', verifyToken, likePost);
+router.put('/:id', verifyToken, updatePost);
 
 // Delete - Delete a post by post id
 router.delete('/:id', verifyToken, deletePost);

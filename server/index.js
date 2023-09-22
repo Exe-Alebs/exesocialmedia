@@ -15,6 +15,9 @@ import { register } from './controllers/authController.js';
 import { verifyToken } from './middlewares/authMiddleware.js';
 import { createPost } from './controllers/postsController.js';
 
+//documentation
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from './swaggerConfig.mjs';
 //models
 import User from './models/UserModel.js';
 import Post from './models/PostModel.js';
@@ -46,6 +49,8 @@ app.post('/posts', verifyToken, upload.single('picture'), createPost);
 app.use('/auth', authRoutes);
 app.use('users', userRoutes);
 app.use('/posts', postRoutes);
+// Serve Swagger UI at the '/api-docs' endpoint
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //DATABASE CONNECTION
 

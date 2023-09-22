@@ -31,3 +31,14 @@ export const addRemoveFriend = async (req, res) => {
     handleServerError(res, error);
   }
 };
+
+export const updateUserController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedData = req.body;
+    const updateUser = await userService.updateUser(id, updatedData);
+    handleSuccessResponse(res, updateUser);
+  } catch (error) {
+    handleServerError(res, error);
+  }
+};

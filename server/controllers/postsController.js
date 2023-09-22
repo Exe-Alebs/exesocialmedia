@@ -60,3 +60,14 @@ export const deletePost = async (req, res) => {
     handleServerError(res, error);
   }
 };
+
+export const updatePost = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const updatedData = req.body; // Assuming the request body contains updated post data
+    const updatedPost = await postService.updatePostById(postId, updatedData);
+    handleSuccessResponse(res, updatedPost);
+  } catch (error) {
+    handleServerError(res, error);
+  }
+};

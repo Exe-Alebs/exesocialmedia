@@ -1,6 +1,6 @@
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Box, TextField, Typography, useTheme } from '@mui/material';
-import FlexBetween from 'components/FlexBetween';
+import FlexBetween from 'components/widgets/FlexBetween';
 import Dropzone from 'react-dropzone';
 
 const RegisterForm = ({

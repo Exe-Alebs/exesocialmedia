@@ -1,6 +1,5 @@
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
-import Form from './Form';
-import React from 'react';
+import Form from './Forms/Form';
 
 const AuthPage = () => {
   const theme = useTheme();

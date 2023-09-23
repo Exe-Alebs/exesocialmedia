@@ -9,4 +9,15 @@ export const loginUser = async (params) => {
   }
 };
 
-export const registerUser = () => {};
+export const registerUser = async (formData) => {
+  try {
+    const response = await axiosInstance.post('/auth/register', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

@@ -11,7 +11,7 @@ import {
   initialValuesRegister,
   initialValuesLogin,
 } from './FormSchema';
-import { loginUser } from './authService';
+import { loginUser, registerUser } from '../authService';
 
 import { setLogin } from 'redux/redux';
 
@@ -20,7 +20,7 @@ const Form = () => {
   const { palette } = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isNonMobile = useMediaQuery('(min-width:600px)');
+  // const isNonMobile = useMediaQuery('(min-width:600px)');
   const isLogin = pageType === 'login';
   const isRegister = pageType === 'register';
 
@@ -33,6 +33,7 @@ const Form = () => {
       onSubmitProps.resetForm();
 
       if (userData) {
+        console.log(userData);
         dispatch(
           setLogin({
             user: userData.user,
@@ -41,12 +42,38 @@ const Form = () => {
         );
         navigate('home');
       }
+      onSubmitProps.resetForm();
     } catch (error) {
       console.log(error);
     }
   };
 
-  const registerUserSubmit = () => {};
+  const registerUserSubmit = async (values, onSubmitProps) => {
+    try {
+      const formData = new FormData();
+      for (let value in values) {
+        formData.append(value, values[value]);
+      }
+      formData.append('picturePath', values.picture.name);
+      const userData = await registerUser(formData);
+
+      console.log('Registration successful:', userData);
+
+      if (userData) {
+        dispatch(
+          setLogin({
+            user: userData.user,
+            token: userData.token,
+          })
+        );
+        navigate('home');
+      }
+
+      onSubmitProps.resetForm();
+    } catch (error) {
+      console.error('Registration failed:', error);
+    }
+  };
 
   const handleFormSubmit = async (values, onSubmitProps) => {
     if (isLogin) await loginUserSubmit(values, onSubmitProps);

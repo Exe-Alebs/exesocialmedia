@@ -1,10 +1,11 @@
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
-import FLexBetween from 'components/FlexBetween';
+import Form from './Form';
 import React from 'react';
 
-const Login = () => {
+const AuthPage = () => {
   const theme = useTheme();
   const isNonMobileScreens = useMediaQuery('min-width: 1000px');
+
   return (
     <>
       <Box>
@@ -19,17 +20,23 @@ const Login = () => {
           </Typography>
         </Box>
         <Box
-          width={isNonMobileScreens ? '50%' : '93%'}
+          width={isNonMobileScreens ? '30%' : '93%'}
           p="2rem"
           m="2rem auto"
           borderRadius="1.5rem"
           backgroundColor={theme.palette.background.alt}
+          display="flex"
+          flexDirection="column" // Center content vertically
+          alignItems="center" // Center content horizontally
         >
-          <Typography>Welcome to Exe socials</Typography>
+          <Typography variant="h6" gutterBottom>
+            Welcome to Exe socials
+          </Typography>
+          <Form />
         </Box>
       </Box>
     </>
   );
 };
 
-export default Login;
+export default AuthPage;

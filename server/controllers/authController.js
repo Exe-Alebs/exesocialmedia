@@ -1,7 +1,6 @@
-import * as userService from '../service/authService.js';
+import * as authService from '../service/authService.js';
 import {
   handleServerError,
-  handleNotFoundError,
   handleValidationErrors,
 } from '../middlewares/error.js';
 import { handleSuccessResponse } from '../middlewares/success.js';
@@ -9,7 +8,7 @@ import { handleSuccessResponse } from '../middlewares/success.js';
 export const register = async (req, res) => {
   try {
     const { body } = req;
-    const savedUser = await userService.registerUser(body);
+    const savedUser = await authService.registerUser(body);
     handleSuccessResponse(res, savedUser, 201);
   } catch (error) {
     if (error.message === 'Required fields are missing') {
@@ -18,7 +17,6 @@ export const register = async (req, res) => {
       error.message ===
       'Email is already registered. Please use a different email address.'
     ) {
-      // Provide the custom error message to the user
       handleValidationErrors(res, error.message);
     } else {
       handleServerError(res, error);
@@ -29,7 +27,7 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const userData = await userService.loginUser(email, password);
+    const userData = await authService.loginUser(email, password);
     handleSuccessResponse(res, userData, 200);
   } catch (error) {
     if (

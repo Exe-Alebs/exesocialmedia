@@ -21,22 +21,30 @@ export const getUserFriendsById = async (id) => {
   );
 };
 
-export const addRemoveFriend = async (userId, friendId) => {
-  const user = await User.findById(userId);
-  const friend = await User.findById(friendId);
+// export const addRemoveFriend = async (userId, friendId) => {
+//   try {
+//     const user = await User.findById(userId);
+//     const friend = await User.findById(friendId);
 
-  if (user.friends.includes(friendId)) {
-    user.friends = user.friends.filter((id) => id !== friendId);
-    friend.friends = friend.friends.filter((id) => id !== userId);
-  } else {
-    user.friends.push(friendId);
-    friend.friends.push(userId);
-  }
+//     if (!user || !friend) {
+//       throw new Error('User or friend not found');
+//     }
 
-  await user.save();
-  await friend.save();
-  return getUserFriendsById(userId);
-};
+//     if (user.friends.includes(friendId)) {
+//       user.friends = user.friends.filter((id) => id !== friendId);
+//       friend.friends = friend.friends.filter((id) => id !== userId);
+//     } else {
+//       user.friends.push(friendId);
+//       friend.friends.push(userId);
+//     }
+
+//     await user.save();
+//     await friend.save();
+//     return getUserFriendsById(userId);
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 export const updateUser = async (userId, updatedData) => {
   const user = await User.findByIdAndUpdate(userId, updatedData, {
